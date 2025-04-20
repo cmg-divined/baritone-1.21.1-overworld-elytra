@@ -1,4 +1,4 @@
-/*
+5/*
  * This file is part of Baritone.
  *
  * Baritone is free software: you can redistribute it and/or modify
@@ -196,7 +196,11 @@ public class ElytraProcess extends BaritoneProcessHelper implements IBaritonePro
             behavior.landingMode = this.state == State.LANDING;
             this.goal = null;
             baritone.getInputOverrideHandler().clearAllKeys();
-            behavior.tick();
+            try {
+                 behavior.tick();
+             } finally {
+                 behavior.context.readLock.unlock();
+             }
             return new PathingCommand(null, PathingCommandType.CANCEL_AND_SET_GOAL);
         } else if (this.state == State.LANDING) {
             if (ctx.playerMotion().multiply(1, 0, 1).length() > 0.001) {
