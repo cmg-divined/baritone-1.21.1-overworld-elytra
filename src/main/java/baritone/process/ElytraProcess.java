@@ -196,12 +196,7 @@ public class ElytraProcess extends BaritoneProcessHelper implements IBaritonePro
             behavior.landingMode = this.state == State.LANDING;
             this.goal = null;
             baritone.getInputOverrideHandler().clearAllKeys();
-            behavior.context.readLock.lock();
-            try {
-                behavior.tick();
-            } finally {
-                behavior.context.readLock.unlock();
-            }
+            behavior.tick();
             return new PathingCommand(null, PathingCommandType.CANCEL_AND_SET_GOAL);
         } else if (this.state == State.LANDING) {
             if (ctx.playerMotion().multiply(1, 0, 1).length() > 0.001) {
@@ -370,12 +365,15 @@ public class ElytraProcess extends BaritoneProcessHelper implements IBaritonePro
         int minY = ctx.world().dimensionType().minY();
         int maxY = (ctx.world().dimension() == Level.NETHER && !Baritone.settings().elytraAllowAboveRoof.value) ? 127 : Math.min(minY + 384, ctx.world().dimensionType().height() + minY);
         if (y < minY || y >= maxY) {
-            throw new IllegalArgumentException("The goal must have a y value between " + minY + " and " + maxY);
+            logDirect("Cannot path: Goal Y position (" + y + ") is outside valid range (" + minY + " to " + maxY + ")");
+            return;
         }
 
         int playerY = (int)ctx.player().getY();
         if (playerY < minY || playerY >= maxY) {
-            throw new IllegalArgumentException("The player must have a y value between " + minY + " and " + maxY);
+            // Handle invalid player position gracefully
+            logDirect("Cannot path: Player Y position (" + playerY + ") is outside valid range (" + minY + " to " + maxY + ")");
+            return;
         }
 
         this.pathTo(new BlockPos(x, y, z));
