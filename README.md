@@ -1,4 +1,4 @@
-# Baritone - FULL credit to underscore_zi and babbaj for the 1.19.4 port for elytra OW support + their nether pathfinder master update for OW support, I just forward ported it to 1.21.1 - https://github.com/underscore-zi/baritone - check their repo out here, this port is still a WIP, if this has already been forward ported better to 1.21.1 somewhere lmk
+# Baritone - FULL credit to underscore_zi and babbaj for the 1.19.4 port for elytra OW support + their nether pathfinder master update for OW support, I just forward ported it to 1.21.1 - https://github.com/underscore-zi/baritone - check their repo out here, this port is still a WIP, if this has already been forward ported better to 1.21.1 somewhere lmk (make sure to terminate the extra java.exe it starts after you close MC, not sure why it does that but ye)
 <p align="center">
   <a href="https://github.com/cabaletta/baritone/releases/"><img src="https://img.shields.io/github/downloads/cabaletta/baritone/total.svg" alt="GitHub All Releases"/></a>
 </p>
